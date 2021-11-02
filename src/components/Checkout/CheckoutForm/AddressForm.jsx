@@ -18,7 +18,6 @@ const AddressForm = ({ checkoutToken, next }) => {
 
   const fetchShippingCountries = async (checkoutTokenId) => {
     const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
-    console.log('Countries', countries);
 
     setShippingCountries(countries);
     setCountry(Object.keys(countries)[0]);
@@ -27,7 +26,6 @@ const AddressForm = ({ checkoutToken, next }) => {
   const fetchSubdivisions = async (countryName) => {
     const { subdivisions } = await commerce.services.localeListSubdivisions(countryName);
 
-    console.log('Subdivisions: ', subdivisions);
     setShippingSubdivisions(subdivisions);
     setSubdivision(Object.keys(subdivisions)[0]);
   }
@@ -57,7 +55,7 @@ const AddressForm = ({ checkoutToken, next }) => {
 
   return (
     <Fragment>
-      <Typography variant='h6' gutterBottom>Shipping Address</Typography>
+      <Typography variant='h6' gutterBottom style={{ margin: '20px 0' }}>Shipping Address</Typography>
       <FormProvider{...methods}>
         <form onSubmit={methods.handleSubmit((data) => next({ ...data, country: country, subdivision: subdivision, option: option }))}>
           <Grid container spacing={3}>
@@ -90,7 +88,7 @@ const AddressForm = ({ checkoutToken, next }) => {
 
 
             <Grid item xs={12} sm={6}>
-              <InputLabel>Option</InputLabel>
+              <InputLabel>Options</InputLabel>
               <Select value={option} fullWidth onChange={e => setOption(e.target.value)}>
                 {shippingOptions.map((sO) =>
                 (<MenuItem key={sO.id} value={sO.id}>
@@ -99,15 +97,14 @@ const AddressForm = ({ checkoutToken, next }) => {
                 )}
               </Select>
             </Grid>
-
-            <br />
-
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Button component={Link} to='/cart' variant='outlined'>Back to cart</Button>
-              <Button type='submit' variant='contained' color='primary'>Next</Button>
-            </div>
-
           </Grid>
+
+          <br />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button component={Link} to='/cart' variant='outlined'>Back to cart</Button>
+            <Button type='submit' variant='contained' color='primary'>Next</Button>
+          </div>
+
         </form>
       </FormProvider>
     </Fragment>

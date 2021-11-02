@@ -23,27 +23,27 @@ const App = () => {
   };
 
   const handleAddToCart = async (productId, quantity) => {
-    const { cart } = await commerce.cart.add(productId, quantity);
+    const item = await commerce.cart.add(productId, quantity);
 
-    setCart(cart);
+    setCart(item.cart);
   };
 
   const handleRemoveFromCart = async (productId) => {
-    const { cart } = await commerce.cart.remove(productId);
+    const response = await commerce.cart.remove(productId);
 
-    setCart(cart);
+    setCart(response.cart);
   };
 
   const handleUpdateCartQty = async (productId, quantity) => {
-    const { cart } = await commerce.cart.update(productId, { quantity });
+    const response = await commerce.cart.update(productId, { quantity: quantity });
 
-    setCart(cart);
+    setCart(response.cart);
   };
 
   const handleEmptyCart = async () => {
-    const { cart } = await commerce.cart.empty();
+    const response = await commerce.cart.empty();
 
-    setCart(cart);
+    setCart(response.cart);
   };
 
   const refreshCart = async () => {
